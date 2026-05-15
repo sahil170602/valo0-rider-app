@@ -1,0 +1,27 @@
+﻿@import "tailwindcss";
+
+@theme {
+  /* VALO Brand Colors */
+  --color-brand-primary: #6C2BFF;
+  --color-brand-dark: #4B14D1;
+  --color-brand-light: #EFE7FF;
+  --color-brand-accent: #FFB800;
+  
+  /* Status Colors */
+  --color-status-success: #16A34A;
+  --color-status-warning: #F59E0B;
+  --color-status-error: #DC2626;
+
+  /* UI Specs */
+  --radius-valo: 24px;
+  --shadow-valo: 0px 8px 30px rgba(108, 43, 255, 0.08);
+  
+  /* Typography */
+  --font-sans: "Poppins", ui-sans-serif, system-ui;
+}
+
+@layer base {
+  body {
+    @apply bg-[#FFFFFF] text-[#111827] font-sans antialiased;
+  }
+}
