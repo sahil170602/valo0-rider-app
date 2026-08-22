@@ -13,6 +13,7 @@
     "@capacitor/android": "^8.5.0",
     "@capacitor/cli": "^8.5.0",
     "@capacitor/core": "^8.5.0",
+    "@react-google-maps/api": "^2.20.8",
     "@supabase/supabase-js": "^2.105.4",
     "@tailwindcss/vite": "^4.3.0",
     "@vis.gl/react-google-maps": "^1.8.3",
