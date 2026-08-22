@@ -6,21 +6,22 @@ workflows:
     environment:
       node: latest
       java: 17
-      groups:
-        - keys
     scripts:
       - name: Install dependencies
         script: |
+          cd apps/rider-app
           npm install
       - name: Build Web App
         script: |
+          cd apps/rider-app
           npm run build
       - name: Capacitor Sync
         script: |
+          cd apps/rider-app
           npx cap sync android
       - name: Build Android APK
         script: |
-          cd android
+          cd apps/rider-app/android
           ./gradlew assembleRelease
     artifacts:
-      - android/app/build/outputs/apk/release/*.apk
+      - apps/rider-app/android/app/build/outputs/apk/release/*.apk
