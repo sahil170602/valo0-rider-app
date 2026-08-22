@@ -7,7 +7,7 @@ workflows:
       node: latest
       java: 17
       groups:
-        - production
+        - keys
     scripts:
       - name: Install dependencies
         script: |
