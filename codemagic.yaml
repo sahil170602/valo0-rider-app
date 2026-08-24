@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 workflows:
   rider-app-android:
     name: Valo Rider Android APK Build
@@ -25,3 +26,31 @@ workflows:
           ./gradlew assembleRelease
     artifacts:
       - apps/rider-app/android/app/build/outputs/apk/release/*.apk
+=======
+workflows:
+  rider-app-android:
+    name: Valo Rider Android APK Build
+    max_build_duration: 30
+    instance_type: mac_mini_m2
+    environment:
+      node: latest
+      java: 17
+      groups:
+        - keys
+    scripts:
+      - name: Install dependencies
+        script: |
+          npm install
+      - name: Build Web App
+        script: |
+          npm run build
+      - name: Capacitor Sync
+        script: |
+          npx cap sync android
+      - name: Build Android APK
+        script: |
+          cd android
+          ./gradlew assembleRelease
+    artifacts:
+      - android/app/build/outputs/apk/release/*.apk
+>>>>>>> e56220da659aeb6b4cef7870df9ce5faf5d29c73
