@@ -6,6 +6,8 @@ workflows:
     environment:
       node: latest
       java: 21
+      android_signing:
+        - valo_keystore
     scripts:
       - name: Install dependencies
         script: npm install
@@ -18,6 +20,9 @@ workflows:
           cd android
           chmod +x gradlew
           ./gradlew assembleRelease
+      - name: Sign APK
+        script: |
+          jarsigner -sigalg SHA256withRSA -digestalg SHA-256 -keystore $CM_KEYSTORE_PATH -storepass $CM_KEYSTORE_PASSWORD -keypass $CM_KEY_PASSWORD android/app/build/outputs/apk/release/app-release-unsigned.apk $CM_KEY_ALIAS
+          mv android/app/build/outputs/apk/release/app-release-unsigned.apk android/app/build/outputs/apk/release/Valo-Rider-Signed.apk
     artifacts:
-      - android/app/build/outputs/apk/release/*.apk
-      
+      - android/app/build/outputs/apk/release/Valo-Rider-Signed.apk
