@@ -20,9 +20,19 @@ workflows:
           cd android
           chmod +x gradlew
           ./gradlew assembleRelease
-      - name: Sign APK
+      - name: Zipalign and Sign APK (Android 16 Ready)
         script: |
-          jarsigner -sigalg SHA256withRSA -digestalg SHA-256 -keystore $CM_KEYSTORE_PATH -storepass $CM_KEYSTORE_PASSWORD -keypass $CM_KEY_PASSWORD android/app/build/outputs/apk/release/app-release-unsigned.apk $CM_KEY_ALIAS
-          mv android/app/build/outputs/apk/release/app-release-unsigned.apk android/app/build/outputs/apk/release/Valo-Rider-Signed.apk
+          # 1. Zipalign the APK (Strict requirement for modern Android)
+          zipalign -v -p 4 android/app/build/outputs/apk/release/app-release-unsigned.apk android/app/build/outputs/apk/release/app-release-aligned.apk
+          
+          # 2. Sign with Android's official apksigner (Guarantees V2/V3 signatures)
+          apksigner sign --ks $CM_KEYSTORE_PATH \
+            --ks-pass pass:$CM_KEYSTORE_PASSWORD \
+            --key-pass pass:$CM_KEY_PASSWORD \
+            --ks-key-alias $CM_KEY_ALIAS \
+            android/app/build/outputs/apk/release/app-release-aligned.apk
+            
+          # 3. Rename for final output
+          mv android/app/build/outputs/apk/release/app-release-aligned.apk android/app/build/outputs/apk/release/Valo-Rider-Ready.apk
     artifacts:
-      - android/app/build/outputs/apk/release/Valo-Rider-Signed.apk
+      - android/app/build/outputs/apk/release/Valo-Rider-Ready.apk
